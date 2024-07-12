@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="Location">
+
+
+        <ListPreference
+            android:defaultValue="10"
+            android:key="interval"
+            app:entries="@array/interval"
+            app:entryValues="@array/interval"
+            app:summary="interval"
+            app:title="Interval (seconds)" />
+
+
+        <ListPreference
+            android:defaultValue="10"
+            android:key="sensitivity"
+            app:entries="@array/sensitivity"
+            app:entryValues="@array/sensitivity"
+            app:summary="sensitivity"
+            app:title="Sensitivity (meter)" />
+
+
+
+    </PreferenceCategory>
+
+
+</PreferenceScreen>

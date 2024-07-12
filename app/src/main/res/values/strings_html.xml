@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- page0 -->
+    <string name="html_page0" translatable="false">
+        <![CDATA[
+            <table border="0" cellpadding="8">
+            <colgroup><col span="1" style="background-color:lightblue" /></colgroup>
+
+                <tr><td>
+                    <strong>page 0</strong>
+                </td></tr>
+
+                <tr><td>
+                    wind
+                </td></tr>
+            </table>
+        ]]>
+    </string>
+
+</resources>

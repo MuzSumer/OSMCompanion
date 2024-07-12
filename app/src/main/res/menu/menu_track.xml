@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <group android:id="@+id/system">
+
+        <item
+            android:id="@+id/mode_switch"
+            android:checkable="false"
+            android:checked="true"
+            android:enabled="false"
+            android:title="°"
+            android:visible="false"
+            app:actionLayout="@layout/menu_item_switch"
+            app:showAsAction="ifRoom" />
+
+        <item
+            android:id="@+id/action_about"
+            android:title="@string/menu_about" />
+
+
+    </group>
+</menu>

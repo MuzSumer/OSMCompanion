@@ -1,0 +1,20 @@
+<!--
+/*
+    This file is part of windvolt.
+
+    created 2020 by Max Sumer
+*/
+-->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:shape="oval"
+    android:innerRadius="0dp"
+    android:thickness="0dp">
+
+    <gradient
+        android:startColor="#FFffffff"
+        android:endColor="#00ffffff"
+        android:gradientRadius="48dp"
+        android:type="radial" />
+
+</shape>

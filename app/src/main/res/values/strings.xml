@@ -1,0 +1,135 @@
+<resources>
+    <string name="app_name">OSM Companion</string>
+    <string name="app_support">pinimento@gmail.com</string>
+
+
+    <string name="app_prefs">Settings</string>
+    <string name="app_notifications">Notifications</string>
+
+    <string name="menu_about">About</string>
+
+
+    <string name="title_home">Live</string>
+    <string name="title_dashboard">Places</string>
+    <string name="title_notifications">Tracks</string>
+
+    <!-- records -->
+    <string name="dialog_add">Add</string>
+    <string name="dialog_add_confirm">Save</string>
+    <string name="dialog_edit">Edit</string>
+    <string name="dialog_delete">Remove</string>
+    <string name="dialog_cancel">Cancel</string>
+
+    <string name="dialog_saved_confirmation">Saved</string>
+
+    <!-- moves -->
+    <string name="dialog_selected_up">selected up</string>
+    <string name="dialog_selected_down">selected down</string>
+
+    <string name="report_select">Select an Exposé</string>
+    <string name="report_select_model">Select a Snapshot</string>
+
+    <string name="record_add">New Exposé</string>
+    <string name="record_select">Select an Exposé</string>
+    <string name="record_select_model">Select a Snapshot</string>
+
+    <string name="record_delete_warning">The item will be removed from your device.</string>
+
+    <!-- diagram -->
+    <string name="diagram_notice1">image > edit</string>
+    <string name="diagram_notice2">image > edit
+        \ntext > open</string>
+    <string name="diagram_notice3">image > edit\n
+        text > focus
+        \ntext double > open</string>
+
+
+    <!-- model -->
+    <string name="default_title">generated</string>
+    <string name="default_subject">Placeholder</string>
+
+
+    <string name="model_id">Id</string>
+    <string name="model_date">Date</string>
+    <string name="model_type">Type</string>
+    <string name="model_state">State</string>
+    <string name="model_symbol">Symbol</string>
+    <string name="model_title">Title</string>
+    <string name="model_subject">Subject</string>
+    <string name="model_content">Content</string>
+    <string name="model_targets">Targets</string>
+    <string name="model_tags">Tags</string>
+    <string name="model_specs">Specs</string>
+    <string name="model_location">Location</string>
+    <string name="model_coordinates">Coordinates</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_view_place">ViewPlace</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+
+
+
+
+    <string name="unknown">Unknown</string>
+    <string name="map_mode">Map Source</string>
+    <string name="my_location">My location</string>
+    <string name="offline">Offline mode</string>
+    <string name="samples">Samples</string>
+    <string name="about">About</string>
+    <string name="about_message">This software uses map data provided by OpenStreetMap.org</string>
+
+    <string name="first_fix_message">Got the first fix</string>
+
+    <string name="set_mode_offline">Set to offline mode</string>
+    <string name="set_mode_online">Set to online mode</string>
+    <string name="snapshot">Snapshot</string>
+    <string name="states">States</string>
+
+    <string name="set_mode_show_me">showing and tracking my current location</string>
+    <string name="set_mode_hide_me">hiding my current location</string>
+
+    <string name="format_distance_meters">%s m</string>
+    <string name="format_distance_kilometers">%s km</string>
+    <string name="format_distance_miles">%s mi</string>
+    <string name="format_distance_nautical_miles">%s nm</string>
+    <string name="format_distance_feet">%s ft</string>
+
+    <string name="compass">Compass</string>
+
+    <string name="format_distance_only_meter">m</string>
+    <string name="format_distance_only_kilometer">km</string>
+    <string name="format_distance_only_mile">mi</string>
+    <string name="format_distance_only_nautical_mile">nm</string>
+    <string name="format_distance_only_foot">ft</string>
+
+    <string name="format_distance_value_unit">%1$s %2$s</string>
+    <string name="cacheManagerFailed">"Loading completed with %s errors.</string>
+    <string name="cacheManagerCleaningTitle">"Cleaning tiles</string>
+    <string name="cacheManagerCleanFailed">Cleaning failed. %s tiles deleted.</string>
+    <string name="cacheManagerDownloadingTitle">Downloading tiles</string>
+    <string name="cacheManagerUnsupportedSource">This online tile source doesn\'t support bulk download</string>
+    <string name="cacheManagerCancelTitle">Cancel map download</string>
+    <string name="cacheManagerCancelBody">Do you want to cancel the map download?</string>
+    <string name="cacheManagerYes">Yes</string>
+    <string name="cacheManagerNo">No</string>
+    <string name="cacheManagerHandlingMessage">Handling zoom level: %1$s (from %2$s to %3$s)</string>
+
+
+
+
+    <string name="map_scale_tiles">scale tiles</string>
+
+    <string name="map_replication_vertically">replicate vertically</string>
+    <string name="map_replication_horizontally">replicate horizontally</string>
+
+    <string name="map_rotate_clockwise">rotate clockwise</string>
+    <string name="map_rotate_counterclockwise">rotate counter clockwise</string>
+
+</resources>

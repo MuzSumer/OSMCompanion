@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- any dpi -->
+    <integer name="cell_size_small">180</integer>
+    <integer name="cell_size">320</integer>
+    <integer name="cell_size_large">480</integer>
+</resources>

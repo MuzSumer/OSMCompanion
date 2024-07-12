@@ -1,0 +1,15 @@
+<!--
+/*
+    This file is part of windvolt.
+
+    created 2020 by Max Sumer
+*/
+-->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <corners android:radius="12dp" />
+    <stroke
+        android:width="2dp"
+        android:color="#979797" />
+    <solid android:color="@color/ic_color_night" />
+</shape>
