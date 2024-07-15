@@ -5,7 +5,6 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import org.osmdroid.tileprovider.MapTileProviderBasic;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
@@ -15,7 +14,6 @@ import org.osmdroid.views.overlay.MinimapOverlay;
 import org.osmdroid.views.overlay.OverlayItem;
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import osm.expose.R;
@@ -161,13 +159,16 @@ public class ViewPlace extends AppCompatActivity {
 
 
 
+            /*
             DecimalFormat df = new DecimalFormat("000.0000");
 
             String lon = df.format(longitude).replace(",", ".");
             String lat = df.format(latitude).replace(",", ".");
 
-            //String url = String.format("https://www.openstreetmap.org/#map=17/" + lat + "/" + lon);
-            //wv.loadUrl(url);
+            String url = String.format("https://www.openstreetmap.org/#map=17/" + lat + "/" + lon);
+            wv.loadUrl(url);
+             */
+
 
 
 
@@ -179,7 +180,7 @@ public class ViewPlace extends AppCompatActivity {
             addOverlays();
 
 
-            map.getController().setZoom(18);
+            map.getController().setZoom(18.2);
             map.getController().animateTo(new GeoPoint(latitude, longitude));
         }
 
