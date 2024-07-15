@@ -16,7 +16,7 @@
         android:scrollIndicators="end"
         android:scrollbarSize="8dp"
         android:scrollbars="vertical"
-        app:layout_constraintBottom_toTopOf="@id/mapview"
+        app:layout_constraintBottom_toTopOf="@+id/map_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -37,25 +37,22 @@
 
 
     <LinearLayout
-        android:id="@+id/mapview"
+        android:id="@+id/map_view"
         android:layout_width="match_parent"
         android:layout_height="320dp"
-        android:background="@drawable/app_rbox_background"
-        android:orientation="horizontal"
+        android:background="@drawable/app_rbox_background_blue"
+        android:orientation="vertical"
         android:padding="8dp"
-        app:layout_constraintBottom_toTopOf="@id/control"
+        app:layout_constraintBottom_toTopOf="@+id/control"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/scroll">
 
-        <!--
+
         <org.osmdroid.views.MapView
             android:id="@+id/map"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tileSource="Mapnik">
-        </org.osmdroid.views.MapView>
-        -->
+            android:layout_height="match_parent" />
 
     </LinearLayout>
 

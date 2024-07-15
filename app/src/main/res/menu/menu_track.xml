@@ -16,9 +16,55 @@
             app:showAsAction="ifRoom" />
 
         <item
+            android:id="@+id/action_prefs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:title="@string/app_prefs" />
+
+        <item
             android:id="@+id/action_about"
             android:title="@string/menu_about" />
 
+
+    </group>
+
+
+
+    <group android:id="@+id/map">
+
+        <item
+            android:id="@+id/map_scale_tiles"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checkable="true"
+            android:title="@string/map_scale_tiles" />
+
+        <item
+            android:id="@+id/map_replicate_vertically"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checkable="true"
+            android:title="@string/map_replication_vertically" />
+
+        <item
+            android:id="@+id/map_replicate_horizontally"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checkable="true"
+            android:title="@string/map_replication_horizontally" />
+
+
+        <item
+            android:id="@+id/map_rotate_clockwise"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:title="@string/map_rotate_clockwise" />
+
+        <item
+            android:id="@+id/map_rotate_counterclockwise"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:title="@string/map_rotate_counterclockwise" />
 
     </group>
 </menu>

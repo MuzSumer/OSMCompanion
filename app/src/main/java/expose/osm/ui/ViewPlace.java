@@ -132,7 +132,7 @@ public class ViewPlace extends AppCompatActivity {
         });
          */
 
-        map = findViewById(R.id.map_view);
+        map = findViewById(R.id.map);
 
         map.setTileSource(TileSourceFactory.MAPNIK);
         //map.setTileProvider(new MapTileProviderBasic(getApplicationContext()));

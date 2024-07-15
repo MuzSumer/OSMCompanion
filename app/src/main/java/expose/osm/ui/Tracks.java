@@ -419,23 +419,23 @@ public class Tracks extends Fragment implements Command, TextToSpeech.OnInitList
                     layout.post(() -> {
                         int l = layout.getMeasuredWidth()*3/5;
                         // select
-                        Drawable d = getContext().getDrawable(R.drawable.app_dot_green);
+                        Drawable d = getContext().getDrawable(R.drawable.item_dot_green);
                         int t = 23;
                         DiagramUtil.setDBounds(d, 16, l, t);
 
                         // edit
-                        Drawable e = getContext().getDrawable(R.drawable.app_dot_blue);
+                        Drawable e = getContext().getDrawable(R.drawable.item_dot_blue);
                         t = 77;
                         DiagramUtil.setDBounds(e, 16, l, t);
 
                         // location
-                        Drawable f = getContext().getDrawable(R.drawable.app_dot_red);
+                        Drawable f = getContext().getDrawable(R.drawable.item_dot_red);
                         t = layout.getMeasuredHeight() - 23;
                         DiagramUtil.setDBounds(f, 16, l, t);
 
 
                         // image
-                        Drawable g = getContext().getDrawable(R.drawable.app_dot_white);
+                        Drawable g = getContext().getDrawable(R.drawable.item_dot_white);
                         l = mv.getImage().getMeasuredWidth()/2;
                         t = mv.itemView.getMeasuredHeight()/2;
                         DiagramUtil.setDBounds(g, 32, l, t);
@@ -452,7 +452,7 @@ public class Tracks extends Fragment implements Command, TextToSpeech.OnInitList
                     layout.post(() -> {
                         int l = layout.getMeasuredWidth()*3/5;
 
-                        Drawable d = getContext().getDrawable(R.drawable.app_dot_yellow);
+                        Drawable d = getContext().getDrawable(R.drawable.item_dot_yellow);
                         int t = 23;
                         DiagramUtil.setDBounds(d, 16, t, l);
 

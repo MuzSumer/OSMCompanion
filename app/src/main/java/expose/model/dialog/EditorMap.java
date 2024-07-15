@@ -6,8 +6,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.Button;
 
 import androidx.annotation.NonNull;
@@ -15,10 +13,14 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 
+import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
+import org.osmdroid.views.MapView;
+import org.osmdroid.views.overlay.CopyrightOverlay;
+import org.osmdroid.views.overlay.MinimapOverlay;
 import org.osmdroid.views.overlay.OverlayItem;
+import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 
@@ -31,7 +33,9 @@ import osm.expose.R;
 public class EditorMap extends DialogFragment {
 
     Command diagram;
-    WebView wv;
+    //WebView wv;
+
+    MapView map;
 
     ArrayList<OverlayItem> items;
 
@@ -65,8 +69,20 @@ public class EditorMap extends DialogFragment {
         builder.setView(view);
 
 
+        map = view.findViewById(R.id.map);
 
-        wv = view.findViewById(R.id.map_view);
+        map.setTileSource(TileSourceFactory.MAPNIK);
+        //map.setTileProvider(new MapTileProviderBasic(getActivity()));
+
+
+        map.setMultiTouchControls(true);
+        map.setTilesScaledToDpi(true);
+
+
+
+        addOverlays();
+        /*
+        wv = view.findViewById(R.id.map);
 
         wv.getSettings().setJavaScriptEnabled(true);
         WebViewClient wvc = new WebViewClient() {
@@ -88,17 +104,26 @@ public class EditorMap extends DialogFragment {
         String url = String.format("https://www.openstreetmap.org/#map=17/" + lat + "/" + lon);
         wv.loadUrl(url);
 
+         */
 
+
+        map.getController().setZoom(16.2);
+        map.getController().animateTo(new GeoPoint(latitude, longitude));
 
         String okay = getActivity().getString(R.string.dialog_add_confirm);
         builder.setPositiveButton(okay, (dialog, id) -> {
 
-            String[] words = wv.getUrl().split("/");
-            int size = words.length;
+            //String[] words = wv.getUrl().split("/");
+            //int size = words.length;
 
-            String lo = words[size-1];
-            String la = words[size-2];
+            latitude = map.getMapCenter().getLatitude();
+            longitude = map.getMapCenter().getLongitude();
 
+            //String lo = words[size-1];
+            //String la = words[size-2];
+
+            String lat = Double.toString(latitude);
+            String lon = Double.toString(longitude);
 
             UniversalModel model = new DiagramModel();
             model.setId(diagram.expo().getStore().getNewId());
@@ -106,11 +131,9 @@ public class EditorMap extends DialogFragment {
 
             model.setDate(diagram.expo().getStore().today());
 
-            model.setTitle(la + "/" + lo);
-            model.setCoordinates(la + "/" + lo);
+            model.setTitle(lat + "/" + lon);
+            model.setCoordinates(lat + "/" + lon);
 
-            longitude = Double.parseDouble(lo);
-            latitude = Double.parseDouble(la);
 
             String a = DiagramUtil.findReverseAddress(latitude, longitude);
 
@@ -154,4 +177,29 @@ public class EditorMap extends DialogFragment {
     }//builder
 
 
+    private void addOverlays() {
+        // copyright
+        CopyrightOverlay copyrightOverlay = new CopyrightOverlay(getActivity());
+        copyrightOverlay.setTextSize(10);
+
+        map.getOverlays().add(copyrightOverlay);
+
+
+
+        // location
+        MyLocationNewOverlay location = new MyLocationNewOverlay(map);
+        location.setEnableAutoStop(false);
+        //location.enableFollowLocation();
+        location.enableMyLocation();
+
+        map.getOverlayManager().add(location);
+
+
+
+        // minimap
+        final MinimapOverlay miniMapOverlay = new MinimapOverlay(getActivity(), map.getTileRequestCompleteHandler());
+        map.getOverlays().add(miniMapOverlay);
+
+
+    }
 }

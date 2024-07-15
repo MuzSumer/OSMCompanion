@@ -21,6 +21,8 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import org.osmdroid.views.MapView;
+
 import osm.expose.R;
 
 public class AppWelcome extends AppCompatActivity {
@@ -71,8 +73,12 @@ public class AppWelcome extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        boolean back = false;
 
-
+        if (back) super.onBackPressed();
+    }
 
 
     @Override
@@ -187,14 +193,19 @@ public class AppWelcome extends AppCompatActivity {
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         try {
-            MenuItem item = menu.findItem(R.id.map_scale_tiles);
-            item.setChecked(true);
+            MapView map = findViewById(R.id.map);
+            if (map != null) {
 
-            item = menu.findItem(R.id.map_replicate_vertically);
-            item.setChecked(true);
+                MenuItem item = menu.findItem(R.id.map_scale_tiles);
+                item.setChecked(map.isTilesScaledToDpi());
 
-            item = menu.findItem(R.id.map_replicate_horizontally);
-            item.setChecked(true);
+                item = menu.findItem(R.id.map_replicate_vertically);
+                item.setChecked(map.isVerticalMapRepetitionEnabled());
+
+                item = menu.findItem(R.id.map_replicate_horizontally);
+                item.setChecked(map.isHorizontalMapRepetitionEnabled());
+
+            }
 
 
 
@@ -222,117 +233,54 @@ public class AppWelcome extends AppCompatActivity {
             return true;
         }
 
-        // TODO
 
-        if (id == R.id.map_scale_tiles) {}
 
-        if (id == R.id.map_replicate_vertically) {}
-        if (id == R.id.map_replicate_horizontally) {}
+        MapView map = findViewById(R.id.map);
+        if (map != null) {
+            if (id == R.id.map_scale_tiles) {
 
-        if (id == R.id.map_rotate_clockwise) {}
-        if (id == R.id.map_rotate_counterclockwise) {}
+                boolean value = !map.isTilesScaledToDpi();
+                map.setTilesScaledToDpi(value);
+                map.invalidate();
+
+                return true;
+            }
+
+            if (id == R.id.map_replicate_vertically) {
+                boolean value = !map.isVerticalMapRepetitionEnabled();
+                map.setVerticalMapRepetitionEnabled(value);
+                map.invalidate();
+
+                return true;
+            }
+            if (id == R.id.map_replicate_horizontally) {
+                boolean value = !map.isHorizontalMapRepetitionEnabled();
+                map.setHorizontalMapRepetitionEnabled(value);
+                map.invalidate();
+
+                return true;
+            }
+
+            if (id == R.id.map_rotate_clockwise) {
+                float currentRotation = map.getMapOrientation() + 10;
+                if (currentRotation > 360)
+                    currentRotation = currentRotation - 360;
+                map.setMapOrientation(currentRotation, true);
+
+                return true;
+            }
+            if (id == R.id.map_rotate_counterclockwise) {
+                float currentRotation = map.getMapOrientation() - 10;
+                if (currentRotation < 0)
+                    currentRotation = currentRotation + 360;
+                map.setMapOrientation(currentRotation, true);
+
+                return true;
+            }
+        }
+
 
         return super.onOptionsItemSelected(item);
     }//menu
-
-
-    private String createMap(double latitude, double longitude) {
-        String map = "<HTML>";
-
-        map += "<HEADER>";
-        map += "<TITLE>Map | Geo City</TITLE>";
-
-        map += "<script type='text/javascript' src='https://openlayers.org/api/OpenLayers.js'></script>";
-        map += "<script type='text/javascript' src='https://openstreetmap.org/openlayers/OpenStreetMap.js'></script>";
-        map += "<script type='text/javascript' src='tom.js'></script>";
-
-        map += "<SCRIPT type='text/javascript'>";
-
-
-
-        /*
-        function drawmap() {
-    // Popup und Popuptext mit evtl. Grafik
-    var popuptext="<font color=\"black\"><b>Thomas Heiles<br>Stra&szlig;e 123<br>54290 Trier</b><p><img src=\"test.jpg\" width=\"180\" height=\"113\"></p></font>";
-
-    OpenLayers.Lang.setCode('de');
-
-    // Position und Zoomstufe der Karte
-    var lon = 6.641389;
-    var lat = 49.756667;
-    var zoom = 7;
-
-    map = new OpenLayers.Map('map', {
-        projection: new OpenLayers.Projection("EPSG:900913"),
-        displayProjection: new OpenLayers.Projection("EPSG:4326"),
-        controls: [
-            new OpenLayers.Control.Navigation(),
-            new OpenLayers.Control.LayerSwitcher(),
-            new OpenLayers.Control.PanZoomBar()],
-        maxExtent:
-            new OpenLayers.Bounds(-20037508.34,-20037508.34,
-                                    20037508.34, 20037508.34),
-        numZoomLevels: 18,
-        maxResolution: 156543,
-        units: 'meters'
-    });
-
-    layer_mapnik = new OpenLayers.Layer.OSM.Mapnik("Mapnik");
-    layer_markers = new OpenLayers.Layer.Markers("Address", { projection: new OpenLayers.Projection("EPSG:4326"),
-    	                                          visibility: true, displayInLayerSwitcher: false });
-
-    map.addLayers([layer_mapnik, layer_markers]);
-    jumpTo(lon, lat, zoom);
-
-    // Position des Markers
-    addMarker(layer_markers, 6.641389, 49.756667, popuptext);
-
-}
-         */
-
-
-
-
-
-        map += "</SCRIPT>";
-
-        map += "</HEADER>";
-
-        map += "<BODY onload=drawmap();>";
-
-        map += "<div id='header'>";
-        map += "<div id='content'>Map</div>";
-
-        map += "<div id='osm'>© <a href='https://www.openstreetmap.org'>OpenStreetMap</a>\n" +
-                "     <a href='https://www.openstreetmap.org/copyright'>Mitwirkende</a>,\n" +
-                "     <a href='https://opendatacommons.org/licenses/odbl/'>ODbL</a>\n" +
-                "   </div>";
-
-
-        map += "</div>";
-
-        map += "<div id='map'></div>";
-        /*
-        <div id="header">
-   <div id="content">Karte (Testversion)</div>
-   <div id="osm">© <a href="https://www.openstreetmap.org">OpenStreetMap</a>
-     <a href="https://www.openstreetmap.org/copyright">Mitwirkende</a>,
-     <a href="https://opendatacommons.org/licenses/odbl/">ODbL</a>
-   </div>
-  </div>
-  <div id="map">
-  </div>
-         */
-
-
-
-
-        map += "</BODY>";
-
-        map += "</HTML>";
-
-
-        return map;
-    }
 
 }

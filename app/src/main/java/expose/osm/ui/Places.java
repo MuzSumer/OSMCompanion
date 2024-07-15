@@ -23,8 +23,6 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -213,21 +211,15 @@ public class Places extends Fragment implements Command, LocationListener, TextT
         expo().createStore(store, "places.xml", "");
 
 
-        LinearLayout layout = view.findViewById(R.id.mapview);
 
+        map = view.findViewById(R.id.map);
 
-        map = new MapView(getActivity());
         map.setTileSource(TileSourceFactory.MAPNIK);
         //map.setTileProvider(new MapTileProviderBasic(getActivity()));
 
 
         map.setMultiTouchControls(true);
         map.setTilesScaledToDpi(true);
-
-
-
-        RelativeLayout.LayoutParams fitscreen = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
-        layout.addView(map, fitscreen);
 
 
 
@@ -274,14 +266,13 @@ public class Places extends Fragment implements Command, LocationListener, TextT
         startLocationUpdates();
 
         getLocation();
-
-        showPreview(latitude, longitude);
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         stopLocationUpdates();
+
 
         map = null;
 
@@ -305,6 +296,7 @@ public class Places extends Fragment implements Command, LocationListener, TextT
             map.onResume();
         }
     }
+
 
 
 
@@ -343,13 +335,18 @@ public class Places extends Fragment implements Command, LocationListener, TextT
         latitude = location.getLatitude();
 
 
+        if (expo().getSelectedModel() == null) {
+            showPreview(latitude, longitude);
+        }
+        
+
         double d = DiagramUtil.distanceInKilometers(latitude, longitude, p_latitude, p_longitude);
 
 
         if (d > trigger) {
 
 
-            //showPreview(latitude, longitude);
+
 
             testPlaces();
 
@@ -414,9 +411,8 @@ public class Places extends Fragment implements Command, LocationListener, TextT
             if (d < trigger) {
 
                 expo().setFocus(m.getId(), false);
-
-
                 showPreview(m);
+
 
                 String subject = m.getSubject();
 
@@ -780,23 +776,23 @@ public class Places extends Fragment implements Command, LocationListener, TextT
                     layout.post(() -> {
                         int l = layout.getMeasuredWidth()*3/5;
                         // select
-                        Drawable d = getContext().getDrawable(R.drawable.app_dot_green);
+                        Drawable d = getContext().getDrawable(R.drawable.item_dot_green);
                         int t = 23;
                         DiagramUtil.setDBounds(d, 16, l, t);
 
                         // edit
-                        Drawable e = getContext().getDrawable(R.drawable.app_dot_blue);
+                        Drawable e = getContext().getDrawable(R.drawable.item_dot_blue);
                         t = 77;
                         DiagramUtil.setDBounds(e, 16, l, t);
 
                         // location
-                        Drawable f = getContext().getDrawable(R.drawable.app_dot_red);
+                        Drawable f = getContext().getDrawable(R.drawable.item_dot_red);
                         t = layout.getMeasuredHeight() - 23;
                         DiagramUtil.setDBounds(f, 16, l, t);
 
 
                         // image
-                        Drawable g = getContext().getDrawable(R.drawable.app_dot_white);
+                        Drawable g = getContext().getDrawable(R.drawable.item_dot_white);
                         l = mv.getImage().getMeasuredWidth()/2;
                         t = mv.itemView.getMeasuredHeight()/2;
                         DiagramUtil.setDBounds(g, 32, l, t);
@@ -813,7 +809,7 @@ public class Places extends Fragment implements Command, LocationListener, TextT
                     layout.post(() -> {
                         int l = layout.getMeasuredWidth()*3/5;
 
-                        Drawable d = getContext().getDrawable(R.drawable.app_dot_yellow);
+                        Drawable d = getContext().getDrawable(R.drawable.item_dot_yellow);
                         int t = 23;
 
                         DiagramUtil.setDBounds(d, 16, t, l);

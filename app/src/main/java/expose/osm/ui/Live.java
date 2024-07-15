@@ -245,10 +245,10 @@ public class Live extends Fragment implements LocationListener, TextToSpeech.OnI
         View view = inflater.inflate(R.layout.welcome, container, false);
 
 
-        LinearLayout layout = view.findViewById(R.id.mapview);
 
 
-        map = new MapView(getActivity());
+
+        map = view.findViewById(R.id.map);//new MapView(getActivity());
 
         map.setTileSource(TileSourceFactory.MAPNIK);
         map.setTileProvider(new MapTileProviderBasic(getActivity()));
@@ -258,9 +258,9 @@ public class Live extends Fragment implements LocationListener, TextToSpeech.OnI
         map.setTilesScaledToDpi(true);
 
 
-
-        RelativeLayout.LayoutParams fitscreen = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
-        layout.addView(map, fitscreen);
+        //LinearLayout layout = view.findViewById(R.id.mapview);
+        //RelativeLayout.LayoutParams fitscreen = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
+        //layout.addView(map, fitscreen);
 
 
 

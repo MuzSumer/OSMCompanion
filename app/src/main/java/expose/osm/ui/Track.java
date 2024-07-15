@@ -21,8 +21,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -43,7 +41,6 @@ import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 
-import org.osmdroid.tileprovider.MapTileProviderBasic;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
@@ -175,21 +172,15 @@ public class Track extends AppCompatActivity implements Command, LocationListene
         expo().createStore(store, "track.xml", folder);
 
 
-        LinearLayout layout = findViewById(R.id.mapview);
 
+        map = findViewById(R.id.map);
 
-        map = new MapView(getApplicationContext());
         map.setTileSource(TileSourceFactory.MAPNIK);
-        map.setTileProvider(new MapTileProviderBasic(getApplicationContext()));
+        //map.setTileProvider(new MapTileProviderBasic(getApplicationContext()));
 
 
         map.setMultiTouchControls(true);
         map.setTilesScaledToDpi(true);
-
-
-
-        RelativeLayout.LayoutParams fitscreen = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
-        layout.addView(map, fitscreen);
 
 
 
@@ -218,7 +209,6 @@ public class Track extends AppCompatActivity implements Command, LocationListene
 
         tts = new TextToSpeech(this, this);
     }//onCreate
-
 
 
 
@@ -269,7 +259,32 @@ public class Track extends AppCompatActivity implements Command, LocationListene
     public void onStop() {
         super.onStop();
         stopLocationUpdates();
+
+        map = null;
+
+        tts.stop();
+        tts.shutdown();
     }
+
+
+
+    @Override
+    public void onPause() {
+        if (map != null) {
+            map.onPause();
+        }
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (map != null) {
+            map.onResume();
+        }
+    }
+
+
 
 
     @SuppressLint("MissingPermission")
@@ -280,11 +295,14 @@ public class Track extends AppCompatActivity implements Command, LocationListene
         latitude = location.getLatitude();
 
 
+        if (expo().getSelectedModel() == null) {
+            showPreview(latitude, longitude);
+        }
+
+
         double d = DiagramUtil.distanceInKilometers(latitude, longitude, p_latitude, p_longitude);
 
         if (d > 0.005) {
-
-
             showPreview(latitude, longitude);
 
             DecimalFormat df = new DecimalFormat("000.0000");
@@ -595,23 +613,6 @@ public class Track extends AppCompatActivity implements Command, LocationListene
 
 
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
-
-
-
-
-
-
-
-
 
 
 
@@ -683,23 +684,23 @@ public class Track extends AppCompatActivity implements Command, LocationListene
                     layout.post(() -> {
                         int l = layout.getMeasuredWidth()*3/5;
                         // select
-                        Drawable d = getApplicationContext().getDrawable(R.drawable.app_dot_green);
+                        Drawable d = getApplicationContext().getDrawable(R.drawable.item_dot_green);
                         int t = 23;
                         DiagramUtil.setDBounds(d, 16, l, t);
 
                         // edit
-                        Drawable e = getApplicationContext().getDrawable(R.drawable.app_dot_blue);
+                        Drawable e = getApplicationContext().getDrawable(R.drawable.item_dot_blue);
                         t = 77;
                         DiagramUtil.setDBounds(e, 16, l, t);
 
                         // location
-                        Drawable f = getApplicationContext().getDrawable(R.drawable.app_dot_red);
+                        Drawable f = getApplicationContext().getDrawable(R.drawable.item_dot_red);
                         t = layout.getMeasuredHeight() - 23;
                         DiagramUtil.setDBounds(f, 16, l, t);
 
 
                         // image
-                        Drawable g = getApplicationContext().getDrawable(R.drawable.app_dot_white);
+                        Drawable g = getApplicationContext().getDrawable(R.drawable.item_dot_white);
                         l = mv.getImage().getMeasuredWidth()/2;
                         t = mv.itemView.getMeasuredHeight()/2;
                         DiagramUtil.setDBounds(g, 32, l, t);
@@ -716,7 +717,7 @@ public class Track extends AppCompatActivity implements Command, LocationListene
                     layout.post(() -> {
                         int l = layout.getMeasuredWidth()*3/5;
 
-                        Drawable d = getApplicationContext().getDrawable(R.drawable.app_dot_yellow);
+                        Drawable d = getApplicationContext().getDrawable(R.drawable.item_dot_yellow);
                         int t = 23;
                         DiagramUtil.setDBounds(d, 16, t, l);
 
@@ -1032,6 +1033,30 @@ public class Track extends AppCompatActivity implements Command, LocationListene
     }
 
     @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        try {
+            MapView map = findViewById(R.id.map);
+            if (map != null) {
+
+                MenuItem item = menu.findItem(R.id.map_scale_tiles);
+                item.setChecked(map.isTilesScaledToDpi());
+
+                item = menu.findItem(R.id.map_replicate_vertically);
+                item.setChecked(map.isVerticalMapRepetitionEnabled());
+
+                item = menu.findItem(R.id.map_replicate_horizontally);
+                item.setChecked(map.isHorizontalMapRepetitionEnabled());
+
+            }
+
+
+
+        } catch (Exception e) {}
+
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
@@ -1043,6 +1068,47 @@ public class Track extends AppCompatActivity implements Command, LocationListene
             return true;
         }
 
+
+
+        MapView map = findViewById(R.id.map);
+        if (map != null) {
+            if (id == R.id.map_scale_tiles) {
+                map.setTilesScaledToDpi(!map.isTilesScaledToDpi());
+                map.invalidate();
+
+                return true;
+            }
+
+            if (id == R.id.map_replicate_vertically) {
+                map.setVerticalMapRepetitionEnabled(!map.isVerticalMapRepetitionEnabled());
+                map.invalidate();
+
+                return true;
+            }
+            if (id == R.id.map_replicate_horizontally) {
+                map.setHorizontalMapRepetitionEnabled(!map.isHorizontalMapRepetitionEnabled());
+                map.invalidate();
+
+                return true;
+            }
+
+            if (id == R.id.map_rotate_clockwise) {
+                float currentRotation = map.getMapOrientation() + 10;
+                if (currentRotation > 360)
+                    currentRotation = currentRotation - 360;
+                map.setMapOrientation(currentRotation, true);
+
+                return true;
+            }
+            if (id == R.id.map_rotate_counterclockwise) {
+                float currentRotation = map.getMapOrientation() - 10;
+                if (currentRotation < 0)
+                    currentRotation = currentRotation + 360;
+                map.setMapOrientation(currentRotation, true);
+
+                return true;
+            }
+        }
 
 
         return super.onOptionsItemSelected(item);
