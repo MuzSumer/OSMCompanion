@@ -151,7 +151,7 @@ public class ViewPlace extends AppCompatActivity {
             l.setText(model.getLocation());
 
 
-            String words[] = coords.split("/");
+            String[] words = coords.split("/");
 
             latitude = Double.parseDouble(words[0]);
             longitude = Double.parseDouble(words[1]);
@@ -212,7 +212,7 @@ public class ViewPlace extends AppCompatActivity {
 
 
         // bookmarks
-        ItemizedIconOverlay marks = new ItemizedIconOverlay<>(markers,
+        ItemizedIconOverlay<OverlayItem> marks = new ItemizedIconOverlay<>(markers,
                 new ItemizedIconOverlay.OnItemGestureListener<OverlayItem>() {
                     @Override
                     public boolean onItemSingleTapUp(final int index, final OverlayItem item) {

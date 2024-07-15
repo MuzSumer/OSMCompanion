@@ -126,7 +126,7 @@ public class Track extends AppCompatActivity implements Command, LocationListene
 
         // bookmarks
         addMarkers(expo());
-        ItemizedIconOverlay marks = new ItemizedIconOverlay<>(markers,
+        ItemizedIconOverlay<OverlayItem> marks = new ItemizedIconOverlay<>(markers,
                 new ItemizedIconOverlay.OnItemGestureListener<OverlayItem>() {
                     @Override
                     public boolean onItemSingleTapUp(final int index, final OverlayItem item) {
@@ -272,11 +272,6 @@ public class Track extends AppCompatActivity implements Command, LocationListene
     }
 
 
-    private void addModel() {
-
-
-    }
-
     @SuppressLint("MissingPermission")
     @Override
     public void onLocationChanged(@NonNull Location location) {
@@ -390,10 +385,33 @@ public class Track extends AppCompatActivity implements Command, LocationListene
 
 
 
-    private final View.OnClickListener cellSelect = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            String id = view.getContentDescription().toString();
+    private final View.OnClickListener cellSelect = view -> {
+        String id = view.getContentDescription().toString();
+
+        expo().setFocus(id, false);
+
+        UniversalModel m = expo().getStore().findModel(id);
+
+        showPreview(m);
+
+        speak(m.getSubject());
+    };
+
+    private final View.OnClickListener cellEdit = view -> {
+        String id = view.getContentDescription().toString();
+        expo().setFocus(id, false);
+
+        UniversalModel model = expo().getStore().findModel(id);
+        showPreview(model);
+
+        EditorProperties editor = new EditorProperties(expo(),null, null, model);
+        editor.show(getSupportFragmentManager(), "");
+    };
+
+    private final View.OnClickListener cellOpen = view -> {
+        String id = view.getContentDescription().toString();
+
+        if (!expo().getSelected().equals(id)) {
 
             expo().setFocus(id, false);
 
@@ -401,54 +419,22 @@ public class Track extends AppCompatActivity implements Command, LocationListene
 
             showPreview(m);
 
+
             speak(m.getSubject());
+
+            return;
         }
-    };
-
-    private final View.OnClickListener cellEdit = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            String id = view.getContentDescription().toString();
-            expo().setFocus(id, false);
-
-            UniversalModel model = expo().getStore().findModel(id);
-            showPreview(model);
-
-            EditorProperties editor = new EditorProperties(expo(),null, null, model);
-            editor.show(getSupportFragmentManager(), "");
-        }
-    };
-
-    private final View.OnClickListener cellOpen = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            String id = view.getContentDescription().toString();
-
-            if (!expo().getSelected().equals(id)) {
-
-                expo().setFocus(id, false);
-
-                UniversalModel m = expo().getStore().findModel(id);
-
-                showPreview(m);
-
-
-                speak(m.getSubject());
-
-                return;
-            }
 
 
 
-            Intent intent = new Intent(Track.this, ViewPlace.class);
+        Intent intent = new Intent(Track.this, ViewPlace.class);
 
-            intent.putExtra("namespace", expo().getNamespace());
-            intent.putExtra("folder", expo().getFolder());
-            intent.putExtra("id", id);
+        intent.putExtra("namespace", expo().getNamespace());
+        intent.putExtra("folder", expo().getFolder());
+        intent.putExtra("id", id);
 
 
-            startActivity(intent);
-        }
+        startActivity(intent);
     };
 
 
