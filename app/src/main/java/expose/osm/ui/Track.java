@@ -483,7 +483,7 @@ public class Track extends AppCompatActivity implements Command, LocationListene
         findViewById(R.id.record_search).setOnClickListener(
                 v -> {
 
-                    if (expo().getSelected() != "") {
+                    if (!expo().getSelected().isEmpty()) {
                         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                         startActivityForResult(intent, IMAGE_CAPTURE);
                     }
@@ -842,21 +842,17 @@ public class Track extends AppCompatActivity implements Command, LocationListene
 
                     String l = "";
 
-                    String words[] = location.split(",");
-                    for (int p=0; p<words.length; p++) {
-
-                        String w = words[p];
-
+                    String[] words = location.split(",");
+                    for (String w : words) {
                         if (l.isEmpty()) {
                             l = w;
                         } else {
                             if ((l.length() + w.length() + 1) < max) {
-                                l = l + "," + w;
+                                l += "," + w;
                             }
                         }
-
-
                     }
+
                     location = l;
                 }
                 mv.getLocation().setText(location);
