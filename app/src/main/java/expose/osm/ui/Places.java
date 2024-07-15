@@ -138,7 +138,7 @@ public class Places extends Fragment implements Command, LocationListener, TextT
 
 
         // bookmarks
-        addMarkers();
+        addMarkers(expo());
         ItemizedIconOverlay marks = new ItemizedIconOverlay<>(markers,
                 new ItemizedIconOverlay.OnItemGestureListener<OverlayItem>() {
                     @Override
@@ -219,7 +219,7 @@ public class Places extends Fragment implements Command, LocationListener, TextT
 
         map = new MapView(getActivity());
         map.setTileSource(TileSourceFactory.MAPNIK);
-        map.setTileProvider(new MapTileProviderBasic(getActivity()));
+        //map.setTileProvider(new MapTileProviderBasic(getActivity()));
 
 
         map.setMultiTouchControls(true);
@@ -249,10 +249,10 @@ public class Places extends Fragment implements Command, LocationListener, TextT
     }
 
 
-    private void addMarkers() {
+    private void addMarkers(DiagramExpose expose) {
 
-        for (int p=0; p<expo().getStore().size(); p++) {
-            UniversalModel model = expo().getStore().getModelAt(p);
+        for (int p=0; p<expose.getStore().size(); p++) {
+            UniversalModel model = expose.getStore().getModelAt(p);
 
             String[] words = model.getCoordinates().split("/");
 

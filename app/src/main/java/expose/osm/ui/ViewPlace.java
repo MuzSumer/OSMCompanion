@@ -1,15 +1,23 @@
 package expose.osm.ui;
 
-import android.graphics.Canvas;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import org.osmdroid.tileprovider.MapTileProviderBasic;
+import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
+import org.osmdroid.util.GeoPoint;
+import org.osmdroid.views.MapView;
+import org.osmdroid.views.overlay.CopyrightOverlay;
+import org.osmdroid.views.overlay.ItemizedIconOverlay;
+import org.osmdroid.views.overlay.MinimapOverlay;
+import org.osmdroid.views.overlay.OverlayItem;
+import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
+
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+
 import osm.expose.R;
 import expose.model.impl.DiagramExpose;
 import expose.model.impl.DiagramStore;
@@ -19,12 +27,13 @@ import expose.model.meta.UniversalModel;
 public class ViewPlace extends AppCompatActivity {
 
     DiagramExpose expo;
-    WebView wv;
+
+    MapView map;
 
     double latitude, longitude;
-    Drawable mark;
 
 
+    final ArrayList<OverlayItem> markers = new ArrayList<>();
 
 
     private DiagramExpose expo() { return expo; }
@@ -44,9 +53,6 @@ public class ViewPlace extends AppCompatActivity {
         expo().createStore(store, namespace, folder);
 
 
-        mark = getApplicationContext().getDrawable(R.drawable.app_map);
-
-
         setContentView(R.layout.view_place);
 
         TextView c = findViewById(R.id.map_coordinates);
@@ -54,6 +60,7 @@ public class ViewPlace extends AppCompatActivity {
 
 
 
+        /*
         wv = findViewById(R.id.map_view);
 
 
@@ -125,10 +132,16 @@ public class ViewPlace extends AppCompatActivity {
                 }
             }
         });
+         */
+
+        map = findViewById(R.id.map_view);
+
+        map.setTileSource(TileSourceFactory.MAPNIK);
+        //map.setTileProvider(new MapTileProviderBasic(getApplicationContext()));
 
 
-
-
+        map.setMultiTouchControls(true);
+        map.setTilesScaledToDpi(true);
 
 
 
@@ -153,10 +166,67 @@ public class ViewPlace extends AppCompatActivity {
             String lon = df.format(longitude).replace(",", ".");
             String lat = df.format(latitude).replace(",", ".");
 
-            String url = String.format("https://www.openstreetmap.org/#map=17/" + lat + "/" + lon);
-            wv.loadUrl(url);
+            //String url = String.format("https://www.openstreetmap.org/#map=17/" + lat + "/" + lon);
+            //wv.loadUrl(url);
+
+
+
+
+            markers.add(new OverlayItem(model.getId(), model.getTitle(), model.getSubject(),
+                    new GeoPoint(latitude, longitude)));
+
+
+            addOverlays();
+
+
+            map.getController().setZoom(18);
+            map.getController().animateTo(new GeoPoint(latitude, longitude));
         }
 
     }
 
+    private void addOverlays() {
+        // copyright
+        CopyrightOverlay copyrightOverlay = new CopyrightOverlay(getApplicationContext());
+        copyrightOverlay.setTextSize(10);
+
+        map.getOverlays().add(copyrightOverlay);
+
+
+
+        // location
+        MyLocationNewOverlay location = new MyLocationNewOverlay(map);
+        location.setEnableAutoStop(false);
+        //location.enableFollowLocation();
+        location.enableMyLocation();
+
+        map.getOverlayManager().add(location);
+
+
+
+        // minimap
+        final MinimapOverlay miniMapOverlay = new MinimapOverlay(getApplicationContext(), map.getTileRequestCompleteHandler());
+        map.getOverlays().add(miniMapOverlay);
+
+
+
+        // bookmarks
+        ItemizedIconOverlay marks = new ItemizedIconOverlay<>(markers,
+                new ItemizedIconOverlay.OnItemGestureListener<OverlayItem>() {
+                    @Override
+                    public boolean onItemSingleTapUp(final int index, final OverlayItem item) {
+
+                        return true;
+                    }
+
+                    @Override
+                    public boolean onItemLongPress(final int index, final OverlayItem item) {
+
+                        return true;
+                    }
+                }, getApplicationContext());
+
+        map.getOverlays().add(marks);
+
+    }
 }

@@ -3,8 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.LiveMap">
+    android:layout_height="match_parent">
 
 
     <TextView
@@ -21,9 +20,10 @@
         android:text="@string/model_location"
         android:textAlignment="center" />
 
-    <WebView
+    <org.osmdroid.views.MapView
         android:id="@+id/map_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        tilesource="Mapnik" />
 
 </LinearLayout>

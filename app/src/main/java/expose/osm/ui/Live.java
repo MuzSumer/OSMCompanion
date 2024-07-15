@@ -33,15 +33,22 @@ import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.CopyrightOverlay;
+import org.osmdroid.views.overlay.ItemizedIconOverlay;
 import org.osmdroid.views.overlay.MapEventsOverlay;
 import org.osmdroid.views.overlay.MinimapOverlay;
+import org.osmdroid.views.overlay.OverlayItem;
 import org.osmdroid.views.overlay.compass.CompassOverlay;
 import org.osmdroid.views.overlay.gestures.RotationGestureOverlay;
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Locale;
 
+import expose.model.impl.DiagramExpose;
+import expose.model.impl.DiagramStore;
+import expose.model.meta.Store;
+import expose.model.meta.UniversalModel;
 import osm.expose.R;
 import expose.model.DiagramUtil;
 
@@ -62,6 +69,9 @@ public class Live extends Fragment implements LocationListener, TextToSpeech.OnI
 
     //WebView wv;
     MapView map;
+
+
+    final ArrayList<OverlayItem> markers = new ArrayList<>();
 
 
     TextToSpeech tts;
@@ -150,6 +160,61 @@ public class Live extends Fragment implements LocationListener, TextToSpeech.OnI
         overlay.enableCompass();
         map.getOverlayManager().add(overlay);
         map.invalidate();
+
+
+        //addBookmarks();
+
+    }
+
+    private void addBookmarks() {
+        // bookmarks
+        DiagramExpose e = new DiagramExpose(getContext(), null, null);
+        Store store = new DiagramStore(e,"places.xml");
+        e.createStore(store, "places.xml", "");
+
+
+        addMarkers(e);
+        ItemizedIconOverlay marks = new ItemizedIconOverlay<>(markers,
+                new ItemizedIconOverlay.OnItemGestureListener<OverlayItem>() {
+                    @Override
+                    public boolean onItemSingleTapUp(final int index, final OverlayItem item) {
+
+                        //e.setFocus(item.getUid(), false);
+                        speak(item.getSnippet());
+
+                        //map.getController().animateTo(new GeoPoint(item.getPoint().getLatitude(), item.getPoint().getLongitude()));
+                        return true;
+                    }
+
+                    @Override
+                    public boolean onItemLongPress(final int index, final OverlayItem item) {
+
+                        //e.setFocus(item.getUid(), false);
+                        speak(item.getSnippet());
+
+                        //map.getController().animateTo(new GeoPoint(item.getPoint().getLatitude(), item.getPoint().getLongitude()));
+                        return true;
+                    }
+                }, getActivity());
+
+        map.getOverlays().add(marks);
+    }
+
+    private void addMarkers(DiagramExpose expose) {
+
+        for (int p=0; p<expose.getStore().size(); p++) {
+            UniversalModel model = expose.getStore().getModelAt(p);
+
+            String[] words = model.getCoordinates().split("/");
+
+            double lat = Double.parseDouble(words[0]);
+            double lon = Double.parseDouble(words[1]);
+
+            markers.add(new OverlayItem(model.getId(), model.getTitle(), model.getSubject(),
+                    new GeoPoint(lat, lon)));
+
+        }
+
     }
 
 

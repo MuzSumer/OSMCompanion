@@ -125,7 +125,7 @@ public class Track extends AppCompatActivity implements Command, LocationListene
 
 
         // bookmarks
-        addMarkers();
+        addMarkers(expo());
         ItemizedIconOverlay marks = new ItemizedIconOverlay<>(markers,
                 new ItemizedIconOverlay.OnItemGestureListener<OverlayItem>() {
                     @Override
@@ -224,10 +224,10 @@ public class Track extends AppCompatActivity implements Command, LocationListene
 
 
 
-    private void addMarkers() {
+    private void addMarkers(DiagramExpose expose) {
 
-        for (int p=0; p<expo().getStore().size(); p++) {
-            UniversalModel model = expo().getStore().getModelAt(p);
+        for (int p=0; p<expose.getStore().size(); p++) {
+            UniversalModel model = expose.getStore().getModelAt(p);
 
             String[] words = model.getCoordinates().split("/");
 
