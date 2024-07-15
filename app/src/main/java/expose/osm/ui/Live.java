@@ -161,7 +161,11 @@ public class Live extends Fragment implements LocationListener, TextToSpeech.OnI
 
 
 
-        //addBookmarks();
+        boolean marks = false;
+        if (marks) {
+            addBookmarks();
+        }
+
 
         map.invalidate();
     }

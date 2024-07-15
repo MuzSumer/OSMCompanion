@@ -53,21 +53,21 @@ public class MapViewRepository {
 
     public MarkerInfoWindow getDefaultMarkerInfoWindow() {
         if (mDefaultMarkerInfoWindow == null) {
-            mDefaultMarkerInfoWindow = new MarkerInfoWindow(R.layout.bonuspack_bubble, mMapView);
+            mDefaultMarkerInfoWindow = new MarkerInfoWindow(R.layout.osm_bonuspack_bubble, mMapView);
         }
         return mDefaultMarkerInfoWindow;
     }
 
     public BasicInfoWindow getDefaultPolylineInfoWindow() {
         if (mDefaultPolylineInfoWindow == null) {
-            mDefaultPolylineInfoWindow = new BasicInfoWindow(R.layout.bonuspack_bubble, mMapView);
+            mDefaultPolylineInfoWindow = new BasicInfoWindow(R.layout.osm_bonuspack_bubble, mMapView);
         }
         return mDefaultPolylineInfoWindow;
     }
 
     public BasicInfoWindow getDefaultPolygonInfoWindow() {
         if (mDefaultPolygonInfoWindow == null) {
-            mDefaultPolygonInfoWindow = new BasicInfoWindow(R.layout.bonuspack_bubble, mMapView);
+            mDefaultPolygonInfoWindow = new BasicInfoWindow(R.layout.osm_bonuspack_bubble, mMapView);
         }
         return mDefaultPolygonInfoWindow;
     }

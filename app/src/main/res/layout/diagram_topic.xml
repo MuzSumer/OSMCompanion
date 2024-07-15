@@ -91,7 +91,7 @@
                         android:singleLine="true"
                         android:text="@string/model_title"
                         android:textSize="9sp"
-                        android:visibility="gone" />
+                        android:visibility="visible" />
 
                     <TextView
                         android:id="@+id/item_subject"
