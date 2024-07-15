@@ -43,7 +43,6 @@ import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 
-import org.osmdroid.tileprovider.MapTileProviderBasic;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
@@ -474,72 +473,63 @@ public class Places extends Fragment implements Command, LocationListener, TextT
 
 
 
-    private final View.OnClickListener cellSelect = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            String modelId = view.getContentDescription().toString();
+    private final View.OnClickListener cellSelect = view -> {
+        String modelId = view.getContentDescription().toString();
 
-            //getDiagram().setSelected(modelId);
+        //getDiagram().setSelected(modelId);
 
-            expo().setFocus(modelId, false);
+        expo().setFocus(modelId, false);
 
-            UniversalModel m = expo().getStore().findModel(modelId);
+        UniversalModel m = expo().getStore().findModel(modelId);
 
 
 
-            showPreview(m);
+        showPreview(m);
 
-            speak(m.getSubject());
+        speak(m.getSubject());
 
-        }
     };
 
-    private final View.OnClickListener cellEdit = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            String id = view.getContentDescription().toString();
+    private final View.OnClickListener cellEdit = view -> {
+        String id = view.getContentDescription().toString();
 
 
+        expo().setFocus(id, false);
+
+        UniversalModel model = expo().getStore().findModel(id);
+
+        showPreview(model);
+
+
+        EditorProperties editor = new EditorProperties(expo(),null, null, model);
+        editor.show(getChildFragmentManager(), "");
+    };
+
+    private final View.OnClickListener cellOpen = view -> {
+        String id = view.getContentDescription().toString();
+
+        if (!expo().getSelected().equals(id)) {
+            //getDiagram().setSelected(id);
             expo().setFocus(id, false);
 
             UniversalModel model = expo().getStore().findModel(id);
+            String subject = model.getSubject();
+
+            speak(subject);
 
             showPreview(model);
 
 
-            EditorProperties editor = new EditorProperties(expo(),null, null, model);
-            editor.show(getChildFragmentManager(), "");
+            return;
         }
-    };
-
-    private final View.OnClickListener cellOpen = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            String id = view.getContentDescription().toString();
-
-            if (!expo().getSelected().equals(id)) {
-                //getDiagram().setSelected(id);
-                expo().setFocus(id, false);
-
-                UniversalModel model = expo().getStore().findModel(id);
-                String subject = model.getSubject();
-
-                speak(subject);
-
-                showPreview(model);
 
 
-                return;
-            }
+        Intent intent = new Intent(getActivity(), ViewPlace.class);
+        intent.putExtra("namespace", expo().getNamespace());
+        intent.putExtra("folder", expo().getFolder());
+        intent.putExtra("id", id);
 
-
-            Intent intent = new Intent(getActivity(), ViewPlace.class);
-            intent.putExtra("namespace", expo().getNamespace());
-            intent.putExtra("folder", expo().getFolder());
-            intent.putExtra("id", id);
-
-            startActivity(intent);
-        }
+        startActivity(intent);
     };
 
 
@@ -612,7 +602,7 @@ public class Places extends Fragment implements Command, LocationListener, TextT
         view.findViewById(R.id.record_search).setOnClickListener(
                 v -> {
 
-                    if (expo().getSelected() != "") {
+                    if (!expo().getSelected().isEmpty()) {
                         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                         startActivityForResult(intent, IMAGE_CAPTURE);
                     }

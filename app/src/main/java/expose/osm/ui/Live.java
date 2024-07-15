@@ -58,7 +58,6 @@ public class Live extends Fragment implements LocationListener, TextToSpeech.OnI
     long interval;
     double trigger;
 
-    int map_size = 17;
 
     private FusedLocationProviderClient fusedLocationClient;
     double longitude, latitude;
