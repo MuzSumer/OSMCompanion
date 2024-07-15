@@ -39,7 +39,6 @@ import org.osmdroid.views.overlay.compass.CompassOverlay;
 import org.osmdroid.views.overlay.gestures.RotationGestureOverlay;
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Locale;
 
