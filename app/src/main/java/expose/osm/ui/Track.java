@@ -462,19 +462,19 @@ public class Track extends AppCompatActivity implements Command, LocationListene
 
                     getLocation();
 
-                    double la = latitude;
-                    double lo = longitude;
+                    double lat = latitude;
+                    double lon = longitude;
 
                     UniversalModel m = expo().getSelectedModel();
                     if (m != null) {
                         String coords = m.getCoordinates();
                         String[] words = coords.split("/");
 
-                        la = Double.parseDouble(words[0]);
-                        lo = Double.parseDouble(words[1]);
+                        lat = Double.parseDouble(words[0]);
+                        lon = Double.parseDouble(words[1]);
                     }
 
-                    EditorMap editor = new EditorMap(this, la, lo, markers);
+                    EditorMap editor = new EditorMap(this, lat, lon, markers);
                     editor.show(getSupportFragmentManager(), "locate");
                 }
         );
@@ -514,10 +514,10 @@ public class Track extends AppCompatActivity implements Command, LocationListene
 
                     if (preview) {
                         preview = false;
-                        findViewById(R.id.mapview).setVisibility(View.GONE);
+                        findViewById(R.id.map_view).setVisibility(View.GONE);
                     } else {
                         preview = true;
-                        findViewById(R.id.mapview).setVisibility(View.VISIBLE);
+                        findViewById(R.id.map_view).setVisibility(View.VISIBLE);
                     }
 
                 }

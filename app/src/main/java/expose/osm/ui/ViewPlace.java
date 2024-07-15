@@ -51,7 +51,7 @@ public class ViewPlace extends AppCompatActivity {
         expo().createStore(store, namespace, folder);
 
 
-        setContentView(R.layout.view_place);
+        setContentView(R.layout.diagram_place);
 
         TextView c = findViewById(R.id.map_coordinates);
         TextView l = findViewById(R.id.map_location);

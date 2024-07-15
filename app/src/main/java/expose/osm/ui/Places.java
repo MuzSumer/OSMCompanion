@@ -540,19 +540,19 @@ public class Places extends Fragment implements Command, LocationListener, TextT
 
                     getLocation();
 
-                    double la = latitude;
-                    double lo = longitude;
+                    double lat = latitude;
+                    double lon = longitude;
 
                     UniversalModel m = expo().getSelectedModel();
                     if (m != null) {
                         String coords = m.getCoordinates();
                         String[] words = coords.split("/");
 
-                        la = Double.parseDouble(words[0]);
-                        lo = Double.parseDouble(words[1]);
+                        lat = Double.parseDouble(words[0]);
+                        lon = Double.parseDouble(words[1]);
                     }
 
-                    EditorMap editor = new EditorMap(this, la, lo, markers);
+                    EditorMap editor = new EditorMap(this, lat, lon, markers);
                     editor.show(getChildFragmentManager(), "locate");
 
                 }
@@ -571,10 +571,10 @@ public class Places extends Fragment implements Command, LocationListener, TextT
 
                     if (preview) {
                         preview = false;
-                        view.findViewById(R.id.mapview).setVisibility(View.GONE);
+                        view.findViewById(R.id.map_view).setVisibility(View.GONE);
                     } else {
                         preview = true;
-                        view.findViewById(R.id.mapview).setVisibility(View.VISIBLE);
+                        view.findViewById(R.id.map_view).setVisibility(View.VISIBLE);
                     }
 
 
