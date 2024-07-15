@@ -158,11 +158,12 @@ public class Live extends Fragment implements LocationListener, TextToSpeech.OnI
         overlay.setPointerMode(false);
         overlay.enableCompass();
         map.getOverlayManager().add(overlay);
-        map.invalidate();
+
 
 
         //addBookmarks();
 
+        map.invalidate();
     }
 
     private void addBookmarks() {

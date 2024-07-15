@@ -138,7 +138,7 @@ public class Places extends Fragment implements Command, LocationListener, TextT
 
         // bookmarks
         addMarkers(expo());
-        ItemizedIconOverlay marks = new ItemizedIconOverlay<>(markers,
+        ItemizedIconOverlay<OverlayItem> marks = new ItemizedIconOverlay<>(markers,
                 new ItemizedIconOverlay.OnItemGestureListener<OverlayItem>() {
                     @Override
                     public boolean onItemSingleTapUp(final int index, final OverlayItem item) {
@@ -941,11 +941,8 @@ public class Places extends Fragment implements Command, LocationListener, TextT
 
                     String l = "";
 
-                    String words[] = location.split(",");
-                    for (int p=0; p<words.length; p++) {
-
-                        String w = words[p];
-
+                    String[] words = location.split(",");
+                    for (String w : words) {
                         if (l.isEmpty()) {
                             l = w;
                         } else {
@@ -953,9 +950,8 @@ public class Places extends Fragment implements Command, LocationListener, TextT
                                 l = l + "," + w;
                             }
                         }
-
-
                     }
+
                     location = l;
                 }
                 mv.getLocation().setText(location);
@@ -1003,7 +999,7 @@ public class Places extends Fragment implements Command, LocationListener, TextT
 
 
     @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+    public void onCreateContextMenu(@NonNull ContextMenu menu, @NonNull View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
 
 
