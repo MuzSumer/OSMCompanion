@@ -174,7 +174,7 @@ public class Live extends Fragment implements LocationListener, TextToSpeech.OnI
 
 
         addMarkers(e);
-        ItemizedIconOverlay marks = new ItemizedIconOverlay<>(markers,
+        ItemizedIconOverlay<OverlayItem> marks = new ItemizedIconOverlay<>(markers,
                 new ItemizedIconOverlay.OnItemGestureListener<OverlayItem>() {
                     @Override
                     public boolean onItemSingleTapUp(final int index, final OverlayItem item) {

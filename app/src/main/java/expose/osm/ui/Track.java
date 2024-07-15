@@ -848,7 +848,7 @@ public class Track extends AppCompatActivity implements Command, LocationListene
                             l = w;
                         } else {
                             if ((l.length() + w.length() + 1) < max) {
-                                l += "," + w;
+                                l = l + "," + w;
                             }
                         }
                     }
