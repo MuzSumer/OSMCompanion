@@ -144,58 +144,49 @@ public class Tracks extends Fragment implements Command, TextToSpeech.OnInitList
     }
 
 
-    private View.OnClickListener cellSelect = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            String modelId = view.getContentDescription().toString();
+    private View.OnClickListener cellSelect = view -> {
+        String modelId = view.getContentDescription().toString();
 
-            expo().setFocus(modelId, false);
+        expo().setFocus(modelId, false);
 
-            UniversalModel m = expo().getStore().findModel(modelId);
-            speak(m.getSubject());
-        }
+        UniversalModel m = expo().getStore().findModel(modelId);
+        speak(m.getSubject());
     };
 
-    private View.OnClickListener cellEdit = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            String id = view.getContentDescription().toString();
-            expo().setSelected(id);
+    private View.OnClickListener cellEdit = view -> {
+        String id = view.getContentDescription().toString();
+        expo().setSelected(id);
+
+        expo().setFocus(id, false);
+
+        UniversalModel model = expo().getStore().findModel(id);
+
+        EditorProperties editor = new EditorProperties(expo(),null, null, model);
+        editor.show(getChildFragmentManager(), "");
+    };
+
+    private View.OnClickListener cellOpen = view -> {
+        String id = view.getContentDescription().toString();
+        UniversalModel model = expo().getStore().findModel(id);
+
+
+        if (!expo().getSelected().equals(id)) {
 
             expo().setFocus(id, false);
 
-            UniversalModel model = expo().getStore().findModel(id);
 
-            EditorProperties editor = new EditorProperties(expo(),null, null, model);
-            editor.show(getChildFragmentManager(), "");
+            speak(model.getSubject());
+
+            return;
         }
-    };
-
-    private View.OnClickListener cellOpen = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            String id = view.getContentDescription().toString();
-            UniversalModel model = expo().getStore().findModel(id);
-
-
-            if (!expo().getSelected().equals(id)) {
-
-                expo().setFocus(id, false);
-
-
-                speak(model.getSubject());
-
-                return;
-            }
 
 
 
-            Intent intent = new Intent(getActivity(), Track.class);
-            intent.putExtra("name", model.getSubject());
-            intent.putExtra("folder", model.getContent());
+        Intent intent = new Intent(getActivity(), Track.class);
+        intent.putExtra("name", model.getSubject());
+        intent.putExtra("folder", model.getContent());
 
-            startActivity(intent);
-        }
+        startActivity(intent);
     };
 
 

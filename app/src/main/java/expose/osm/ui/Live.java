@@ -11,8 +11,6 @@ import android.speech.tts.TextToSpeech;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -389,10 +387,13 @@ public class Live extends Fragment implements LocationListener, TextToSpeech.OnI
 
     private void showPreview() {
 
+        /*
         DecimalFormat df = new DecimalFormat("000.0000");
 
         String lon = df.format(longitude).replace(",", ".");
         String lat = df.format(latitude).replace(",", ".");
+         */
+
 
         map.getController().setZoom(16.2);
         map.getController().animateTo(new GeoPoint(latitude, longitude));
